@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: true },
@@ -20,22 +22,41 @@ function Logo() {
 }
 
 function Form() {
+  const [description, setDescription] = useState(""); // set
+  const [quantity, setQuantity] = useState(1);
+  //  state
   function handelSubmit(event) {
     event.preventDefault();
-    console.log(event);
+
+    const newId = Math.trunc(Math.random() * 9999);
+
+    if (!description) return;
+
+    const newItem = { description, quantity, packed: false, id: newId };
+
+    setDescription("");
+    setQuantity(1);
   }
 
   return (
     <form className="add-form" onSubmit={handelSubmit}>
       <h3>What Do tou need for Your 😍 trip </h3>
-      <select>
+      <select
+        value={quantity}
+        onChange={(e) => setQuantity(Number(e.target.value))}
+      >
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
           <option key={num} value={num}>
             {num}
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Item..." />
+      <input
+        type="text"
+        placeholder="Item..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
       <button type="submit">Add</button>
     </form>
   );
@@ -43,6 +64,7 @@ function Form() {
 
 function PackingList() {
   // using .map method for rendering list
+
   return (
     <div className="list">
       <ul>
