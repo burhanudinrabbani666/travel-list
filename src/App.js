@@ -20,10 +20,24 @@ function Logo() {
 }
 
 function Form() {
+  function handelSubmit(event) {
+    event.preventDefault();
+    console.log(event);
+  }
+
   return (
-    <div className="add-form">
+    <form className="add-form" onSubmit={handelSubmit}>
       <h3>What Do tou need for Your 😍 trip </h3>
-    </div>
+      <select>
+        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+          <option key={num} value={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Item..." />
+      <button type="submit">Add</button>
+    </form>
   );
 }
 
